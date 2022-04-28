@@ -9,11 +9,29 @@ namespace MVCVidly.Controllers
         {
             var movie = new Movie() { Id = 1, Name = "Sherek" };
 
-            //return View(movie);
+            //other ways to passing data to views:
+            // 1) the best way, pass the specific object which you want as a argument to View Method;
+            return View(movie);
+            //but how it works????
+            //automaticall, it make a new instance of viewResult, it does this and it is the reason you should use Model to get that; 
+            //var viewResult = new ViewResult();
+            //viewResult.ViewData.Model = movie;
+
+
+
+            // 2) suing ViewData as a dicteonary and then use that in view 
+            //ViewData["Movie"] = movie;
+            //return View();
+
+            // 3) suing ViewBag as a dicteonary and then use that in view 
+            //ViewBag.Movie = movie;
+            //return View();
+
+            // other return type
             //return Content("Hello world"); //return a result as a text 
             //return NotFound();  // it doens't work! nither
             //return new EmptyResult(); // a empty page as a response
-            return RedirectToAction("Index", "Home", new {sortby = false, page = 1 }); //firs argument:action, secondone: controller, thrid argument, specify some parameter as a query stirng
+            //return RedirectToAction("Index", "Home", new {sortby = false, page = 1 }); //firs argument:action, secondone: controller, thrid argument, specify some parameter as a query stirng
         }
 
         public IActionResult Edit(int id) //the aps.net authomatically get id from query, param, or body of request and pass to id
