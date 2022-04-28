@@ -20,6 +20,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+
+// set a custom route / old convetion for doing that; see the ByReleaseDate method in movies controller for better solution
+//app.MapControllerRoute(
+//    name: "MoviesByReleaseDate",
+//    pattern: "{movies}/{released}/{year}/{month}",
+//    defaults: new {controller = "Movies", action = "ByReleaseDate"},
+//    new { year = @"\d{4}", month = @"\d{2}" }); //specify the year should be in 4 digit format and month is 2 digit
+//    // the format in the fourth argument presented is just the regEx and you could change it to your specific patarn
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

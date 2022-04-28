@@ -35,5 +35,14 @@ namespace MVCVidly.Controllers
 
             return Content($"pageIndex = {pageIndex}, sortby = {sortBy}");
         }
+
+        //alternative way to create a custom route; better choice;
+        // you can you regex to narrow option and set a specific pattern to hit, be carefull you should use {{}} 
+        // furthermore you can use a bunch of filter like range in this syntax; (min, max, minlength, maxlength, int, float, guid)
+        [Route("movies/released/{year:regex(\\d{{4}})}/{month:regex(\\d{{2}}):range(1, 12)}")]
+        public IActionResult ByReleaseDate(int year, int month)
+        {
+            return Content($"year: {year}, month: {month}");
+        }
     }
 }
