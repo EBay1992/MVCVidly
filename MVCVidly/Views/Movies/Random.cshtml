@@ -1,15 +1,17 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model MVCVidly.ViewModels.RandomMovieViewModel
+@*@model MVCVidly.ViewModels.RandomMovieViewModel*@
+
+@model MVCVidly.Models.Movie
 @{
     ViewBag.Title = "Random Movie";
 }
 
 @*1) the best way; this model refere to what we passed via argument in view method*@
 @*the description about why we use Model in this case wrote on Random Method in Movie controller*@
-<h2>@Model.Movie.Name</h2>
-<h2>@Model.Customers[0].Name</h2>
+@*<h2>@Model.Movie.Name</h2>
+<h2>@Model.Customers[0].Name</h2>*@
 
 @*2) Fragile aproach - error prone - using the viewData Dicteonary*@
 @*<h2>@( ((Movie) ViewData["Movie"]).Name)</h2>*@
@@ -18,7 +20,7 @@
 @*<h2>@( ((Movie) ViewBag.Movie).Name)</h2>*@
 
 
-
+@*
 @{
     var CustomerNum = Model.Customers.Count;
 
@@ -38,3 +40,8 @@
         <h3>@customer.Name</h3>
     }
 }
+*@
+
+
+<h1>This is a random movie fetched from database</h1>
+<h2>- @Model.Name</h2>

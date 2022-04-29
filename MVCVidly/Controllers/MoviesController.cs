@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVCVidly.Data;
 using MVCVidly.Models;
 using MVCVidly.ViewModels;
 
@@ -6,19 +7,30 @@ namespace MVCVidly.Controllers
 {
     public class MoviesController : Controller
     {
+        private readonly DataContext _dbContext;
+
+        public MoviesController(DataContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public IActionResult Random()
         {
-            var movie = new Movie() { Id = 1, Name = "Sherek" };
-            var customers = new List<Customer>() 
-            { new Customer { Name = "Customer 1" },
-              new Customer { Name = "Customer 1" } 
-            };
 
-            var viewModel = new RandomMovieViewModel() { Movie = movie, Customers = customers};
+            var movie = _dbContext.Movies.OrderBy(movie => Guid.NewGuid()).FirstOrDefault();
+
+            //var movie = new Movie() { Name = "Sherek" };
+            //var customers = new List<Customer>() 
+            //{ new Customer { Name = "Customer 1" },
+            //  new Customer { Name = "Customer 1" } 
+            //};
+
+            //var viewModel = new RandomMovieViewModel() { Movie = movie, Customers = customers};
 
             //other ways to passing data to views:
             // 1) the best way, pass the specific object which you want as a argument to View Method;
-            return View(viewModel);
+            //return View(viewModel);
+            return View(movie);
             //but how it works????
             //automaticall, it make a new instance of viewResult, it does this and it is the reason you should use Model to get that; 
             //var viewResult = new ViewResult();
@@ -58,7 +70,14 @@ namespace MVCVidly.Controllers
                 sortBy = "name";
             }
 
-            return Content($"pageIndex = {pageIndex}, sortby = {sortBy}");
+            var numberOfMoviesPerPage = 5;
+
+
+            var movies = _dbContext.Movies.OrderBy(m => m.Name).Skip(numberOfMoviesPerPage * ((int)pageIndex - 1)).Take(numberOfMoviesPerPage);
+
+            return View(movies);
+
+            //return Content($"pageIndex = {pageIndex}, sortby = {sortBy}");
         }
 
         //alternative way to create a custom route; better choice;
