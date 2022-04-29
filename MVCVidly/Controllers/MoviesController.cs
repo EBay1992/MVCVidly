@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCVidly.Models;
+using MVCVidly.ViewModels;
 
 namespace MVCVidly.Controllers
 {
@@ -8,10 +9,16 @@ namespace MVCVidly.Controllers
         public IActionResult Random()
         {
             var movie = new Movie() { Id = 1, Name = "Sherek" };
+            var customers = new List<Customer>() 
+            { new Customer { Name = "Customer 1" },
+              new Customer { Name = "Customer 1" } 
+            };
+
+            var viewModel = new RandomMovieViewModel() { Movie = movie, Customers = customers};
 
             //other ways to passing data to views:
             // 1) the best way, pass the specific object which you want as a argument to View Method;
-            return View(movie);
+            return View(viewModel);
             //but how it works????
             //automaticall, it make a new instance of viewResult, it does this and it is the reason you should use Model to get that; 
             //var viewResult = new ViewResult();
